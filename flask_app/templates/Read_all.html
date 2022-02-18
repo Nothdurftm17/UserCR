@@ -1,19 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User log</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='my_style.css') }}">
 </head>
+
 <body>
-    <a href="/create">Create User</a>
     <h1>All User Info:</h1>
-    {% for one_user in all_users%}
-    <p>{{one_user.first_name}}</p>
-    <p>{{one_user.last_name}}</p>
-    <p>{{one_user.email}}</p>
-    <p>======================================</p>
-    {% endfor %}
+    <table>
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tr>
+            <tbody>
+                {% for one_user in all_users%}
+                <td>
+                    <p>{{one_user.first_name}}</p>
+                    <p>{{one_user.last_name}}</p>
+                </td>
+                <td>
+                    <p>{{one_user.email}}</p>
+                </td>
+                <td>
+                    <p>{{one_user.created_at}}</p>
+                </td>
+                <td>
+                    <a href="{{one_user.id}}">Show</a>
+                    <a href="/users/{{one_user.id}}/edit">Edit</a>
+                    <a href="/users/{{one_user.id}}/delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/create">Create a New User</a>
 </body>
+
 </html>

@@ -1,4 +1,5 @@
 from crypt import methods
+
 from flask_app import app
 from flask import render_template,request, redirect
 # import the class from friend.py
@@ -23,5 +24,40 @@ def create_user():
     newUser = User.addNew(data)
     #Logic to both create a dictionary from the post data
     # And pass that dictionary to your class method that will insert a user
-    return redirect("/")
+    return redirect("/create.html")
 
+@app.route("/<int:user_id>")
+def show_user(user_id):
+    data={
+        "id" : user_id
+    }
+    user = User.show_user(data)
+    return render_template("show_user.html", user = user)
+
+@app.route("/users/<int:id>/edit")
+def edit(id):
+    data ={
+        "id" : id
+    }
+    user = User.show_user(data)
+    return render_template("edit.html", user = user)
+
+@app.route("/update_user/<int:id>", methods = ["POST"])
+def update_user(id):
+    data = {
+        "id" : id,
+        "first_name" :request.form["fname"],
+        "last_name" :request.form["lname"],
+        "email" :request.form["email"]
+    }
+    User.update_user(data)
+    return redirect(f"/{id}")
+
+
+@app.route('/users/<int:id>/delete')
+def delete(id):
+    data = {
+        "id": id
+    }
+    User.delete(data)
+    return redirect('/')
