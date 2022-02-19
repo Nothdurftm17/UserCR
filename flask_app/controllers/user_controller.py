@@ -24,7 +24,7 @@ def create_user():
     newUser = User.addNew(data)
     #Logic to both create a dictionary from the post data
     # And pass that dictionary to your class method that will insert a user
-    return redirect("/create.html")
+    return redirect("/")
 
 @app.route("/<int:user_id>")
 def show_user(user_id):
